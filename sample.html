@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>sample of opt-layers</title>
+<meta name="viewport" content="width=device-width, user-scalable=yes">
+<script src="https://map.yahooapis.jp/js/V1/jsapi?appid=YOUR_APPLICATION_ID"></script>
+<script src="yolp-opt-layers.js"></script>
+<script>
+
+document.addEventListener('DOMContentLoaded', function(event) {
+
+  var osmLayerSet = YolpOptLayers.createOpenStreetMapLayerSet('OpenStreetMap');
+  var ccLayerSet  = YolpOptLayers.createChiriinChizuLayerSet('地理院地図');
+
+  var layerSets = {
+    [Y.LayerSetId.NORMAL]: new Y.LayerSet('地図', [new Y.NormalLayer()]),
+    'openstreetmap': osmLayerSet,
+    'chiriinchizu':  ccLayerSet
+  };
+
+  var map = new Y.Map('map', {
+    configure: {
+      doubleClickZoom: true,
+      scrollWheelZoom: true,
+      dragging: true
+    },
+    layerSets: layerSets
+  });
+
+  // レイヤーセット切替時にクレジット表記を変更する
+  map.bind('layersetchanged', function(newLayerSet, oldLayerSet) {
+    YolpOptLayers.layersetchanged(newLayerSet, oldLayerSet, map);
+  });
+
+  map.addControl(new Y.LayerSetControl());
+  map.addControl(new Y.ScaleControl());
+  map.addControl(new Y.SliderZoomControlVertical());
+  map.drawMap(new Y.LatLng(35.170700, 136.881700), 15); // 名古屋駅
+
+  window.addEventListener('resize', function (event) {
+    map.updateSize();
+  });
+});
+
+</script>
+
+<style>
+html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+#map {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+</style>
+
+</head>
+<body>
+
+<div id="map"></div>
+
+<!-- Begin Yahoo! JAPAN Web Services Attribution Snippet -->
+<a href="http://developer.yahoo.co.jp/about">
+<img src="http://i.yimg.jp/images/yjdn/yjdn_attbtn1_125_17.gif" title="Webサービス by Yahoo! JAPAN" alt="Web Services by Yahoo! JAPAN" width="125" height="17" border="0" style="margin:15px 15px 15px 15px"></a>
+<!-- End Yahoo! JAPAN Web Services Attribution Snippet -->
+
+</body>
+</html>
+

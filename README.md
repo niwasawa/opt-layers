@@ -1,2 +1,3 @@
 # opt-layers
-Optional layers for YOLP Yahoo! JavaScript Map API
+The opt-layers is optional layers for YOLP Yahoo! JavaScript Map API.
+
